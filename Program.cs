@@ -1,3 +1,12 @@
+using Supermarket._Repositories;
+using Supermarket.Views;
+using Supermarket._Repositories;
+using Supermarket.Models;
+using Supermarket.Views;
+using Supermarket.Properties;
+using System.Configuration;
+using Supermarket.Presenters;
+
 namespace Supermarket
 {
     internal static class Program
@@ -11,7 +20,11 @@ namespace Supermarket
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Views.PayModeView());
+            string sqlConnectionString = Settings.Default.SqlConnection;
+            IPayModeView view = new PayModeView();
+            IPayModeRepository repository = new PayModeRepository(sqlConnectionString);
+            new PayModePresenter(view, repository);
+            Application.Run(new PayModeView());
         }
     }
 }

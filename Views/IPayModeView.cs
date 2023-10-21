@@ -16,9 +16,9 @@ namespace Supermarket.Views
 
         string SearchValue {get; set; }
 
-        bool isEdit {  get; set; }
+        bool IsEdit {  get; set; }
 
-        bool isSuccessfull {  get; set; }
+        bool IsSuccessfull {  get; set; }
 
         string Message {  get; set; }
 

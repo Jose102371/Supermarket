@@ -12,23 +12,57 @@ namespace Supermarket.Views
 {
     public partial class PayModeView : Form, IPayModeView
 
-
     {
+        private string message;
         private bool isEdit;
         private bool isSuccessfull;
-        private string message;
 
+        public string PayModeId
+        {
+            get { return TxtPayModeId.Text; }
+            set { TxtPayModeId.Text = value; }
+        }
+        public string PayModeName
+        {
+            get { return TxtPayModeName.Text; }
+            set { TxtPayModeName.Text = value; }
+        }
+        public string PayModeObservation
+        {
+            get { return TxtPayModeObservation.Text; }
+            set { TxtPayModeObservation.Text = value; }
+        }
+        public string SearchValue
+        {
+            get { return TxtSearch.Text; }
+            set { TxtSearch.Text = value; }
+        }
+        public bool IsEdit
+        {
+            get { return isEdit; }
+            set { isEdit = value; }
+        }
+        public bool IsSuccessfull
+        {
+            get { return isSuccessfull; }
+            set { isSuccessfull = value; }
+        }
+        public string Message
+        {
+            get { return message; }
+            set { message = value; }
+        }
         public PayModeView()
         {
             InitializeComponent();
-            AssociateAndRaiseViewEvent();
+            AssociiateAndRaiseViewEvents();
 
-            AssociateAndRaiseViewEvent();
-        
+            tabControl1.TabPages.Remove(tabPagePayModeDetail);
         }
 
-        private void AssociateAndRaiseViewEvent()
+        private void AssociiateAndRaiseViewEvents()
         {
+
             BtnSearch.Click += delegate { SearchEvent?.Invoke(this, EventArgs.Empty); };
 
             TxtSearch.KeyDown += (s, e) =>
@@ -37,46 +71,13 @@ namespace Supermarket.Views
                 {
                     SearchEvent?.Invoke(this, EventArgs.Empty);
                 }
+
             };
         }
 
-        public string PayModeId
-        {
-            get { return TxtPayModeId.Text; }
-            set { TxtPayModeId.Text=value; }
-        }
-        public string PayModeName {
-
-            get { return TxtPayModeName.Text; }
-            set { TxtPayModeName.Text = value;} 
         
-        }
-        public string PayModeObservation 
-        {
-            get { return TxtPayModeObservation.Text; ; }
-            set { TxtPayModeObservation.Text = value; }
-        }
-        public string SearchValue {
 
-            get { return TxtSearch.Text; }
-            set { TxtSearch.Text = value;  }  
-              
-        }
-        public bool IsEdit
-        {
-            get { return isEdit; }
-            set { isEdit = value; } 
-        }
-        public bool IsSuccessfull 
-        {
-            get { return isSuccessfull; }
-            set { isSuccessfull = value; } 
-        }
-        public string Message 
-        {
-            get { return message; }
-            set { message = value; } 
-        }
+        
 
         public event EventHandler SearchEvent;
         public event EventHandler AddNewEvent;
@@ -90,8 +91,11 @@ namespace Supermarket.Views
             DgPayMode.DataSource = payModeList;
         }
     }
+}
 
-   
-    }
+
+
+
+
 
 
