@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Driver.Core.Operations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +12,6 @@ using System.Windows.Forms;
 namespace Supermarket.Views
 {
     public partial class PayModeView : Form, IPayModeView
-
     {
         private string message;
         private bool isEdit;
@@ -75,9 +75,6 @@ namespace Supermarket.Views
             };
         }
 
-        
-
-        
 
         public event EventHandler SearchEvent;
         public event EventHandler AddNewEvent;
@@ -90,8 +87,31 @@ namespace Supermarket.Views
         {
             DgPayMode.DataSource = payModeList;
         }
+
+        private static PayModeView instance;
+
+        public static PayModeView GetInstance()
+        {
+            if (instance == null || instance.IsDisposed)
+            {
+                instance = new PayModeView();
+            }
+
+            else
+            {
+                if (instance.WindowState == FormWindowState.Minimized)
+                {
+                    instance.WindowState = FormWindowState.Normal;
+                }
+                instance.BringToFront();
+            }
+            return instance;
+        }
     }
 }
+
+    
+
 
 
 
