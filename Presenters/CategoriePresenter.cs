@@ -1,137 +1,123 @@
-﻿using Supermarket.Models;
+﻿using Microsoft.Data.SqlClient;
+using MongoDB.Driver.Core.Configuration;
+using Supermarket._Repositories;
+using Supermarket.Models;
 using Supermarket.Views;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Supermarket.Presenters
 {
-    internal class CategoriePresenter
+    internal class CategorieRepository : BaseRepository, ICategorieRepository
     {
-        private ICategorieView view;
-        private ICategorieRepository repository;
-        private BindingSource categorieBindingSource;
-        private IEnumerable<CategorieModel> categorieList;
-
-        public CategoriePresenter(ICategorieView view, ICategorieRepository repository)
+        public CategorieRepository(string connectionString)
         {
-            this.categorieBindingSource = new BindingSource();
-
-            this.view = view;
-            this.repository = repository;
-
-            this.view.SearchEvent += SearchCategorie;
-            this.view.AddNewEvent += AddNewCategorie;
-            this.view.EditEvent += LoadSelectCategorieToEdit;
-            this.view.DeleteEvent += DeleteSelectedCategorie;
-            this.view.SaveEvent += SaveCategorie;
-            this.view.CancelEvent += CancelAction;
-
-            this.view.SetCategorieListBildingSource(categorieBindingSource);
-
-            LoadAllCategorieList();
-
-            this.view.Show();
-
+            this.connectionString = connectionString;
         }
-
-        private void LoadAllCategorieList()
+        public void Add(CategorieModel categorieModel)
         {
-            categorieList = repository.GetAll();
-            categorieBindingSource.DataSource = categorieList;
-        }
-
-        private void CancelAction(object? sender, EventArgs e)
-        {
-            CleanViewFields();
-        }
-
-        private void SaveCategorie(object? sender, EventArgs e)
-        {
-            var categorie = new CategorieModel();
-            categorie.Id = Convert.ToInt32(view.CategorieId);
-            categorie.Name = view.CategorieName;
-            categorie.Observation = view.CategorieObservation;
-
-            try
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand())
             {
-                new Common.ModelDataValidation().Validate(categorie);
-                if (view.IsEdit)
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "INSERT INTO Categorie VALUES (@name, @observation)";
+                command.Parameters.Add("@name", SqlDbType.NVarChar).Value = categorieModel.Name;
+                command.Parameters.Add("@observation", SqlDbType.NVarChar).Value = categorieModel.Observation;
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "DELETE FROM Categorie WHERE Categorie_Id = @id";
+                command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Edit(CategorieModel categorieModel)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = @"UPDATE Categorie
+                                    SET Categorie_Name =@name,
+                                    Categorie_Observation = @observation
+                                    WHERE Categorie_Id = @id";
+                command.Parameters.Add("@name", SqlDbType.NVarChar).Value = categorieModel.Name;
+                command.Parameters.Add("@observation", SqlDbType.NVarChar).Value = categorieModel.Observation;
+                command.Parameters.Add("@id", SqlDbType.Int).Value = categorieModel.Id;
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public IEnumerable<CategorieModel> GetAll()
+        {
+            var categorieList = new List<CategorieModel>();
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM Categorie ORDER BY Categorie_Id DESC";
+                using (var reader = command.ExecuteReader())
                 {
-                    repository.Edit(categorie);
-                    view.Message = "Categorie edited successfuly";
+                    while (reader.Read())
+                    {
+                        var categorieModel = new CategorieModel();
+                        categorieModel.Id = (int)reader["Categorie_Id"];
+                        categorieModel.Name = reader["Categorie_Name"].ToString();
+                        categorieModel.Observation = reader["Categorie_Observation"].ToString();
+                        categorieList.Add(categorieModel);
+                    }
                 }
-                else
+            }
+            return categorieList;
+        }
+
+        public IEnumerable<CategorieModel> GetByValue(string value)
+        {
+            var categorieList = new List<CategorieModel>();
+            int categorieId = int.TryParse(value, out _) ? Convert.ToInt32(value) : 0;
+            string categorieName = value;
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = @"SELECT * FROM Categorie
+                                    WHERE Categorie_Id=@id or Categorie_Name LIKE @name+ '%'
+                                    ORDER By Categorie_Id DESC";
+                command.Parameters.Add("@id", SqlDbType.Int).Value = categorieId;
+                command.Parameters.Add("@name", SqlDbType.NVarChar).Value = categorieName;
+                using (var reader = command.ExecuteReader())
                 {
-                    repository.Add(categorie);
-                    view.Message = "Categorie added successfuly";
+                    while (reader.Read())
+                    {
+                        var categorieModel = new CategorieModel();
+                        categorieModel.Id = (int)reader["Categorie_Id"];
+                        categorieModel.Name = reader["Categorie_Name"].ToString();
+                        categorieModel.Observation = reader["Categorie_Observation"].ToString();
+                        categorieList.Add(categorieModel);
+                    }
                 }
-                view.IsSuccesful = true;
-                LoadAllCategorieList();
-                CleanViewFields();
+
             }
-            catch (Exception ex)
-            {
-                view.IsSuccesful = false;
-                view.Message = ex.Message;
-            }
+            return categorieList;
+
         }
 
-        private void CleanViewFields()
-        {
-            view.CategorieId = "0";
-            view.CategorieName = "";
-            view.CategorieObservation = "";
-        }
-
-        private void DeleteSelectedCategorie(object? sender, EventArgs e)
-        {
-            try
-            {
-                var categorie = (CategorieModel)categorieBindingSource.Current;
-
-                repository.Delete(categorie.Id);
-                view.IsSuccesful = true;
-                view.Message = "Categorie deleted successfully";
-                LoadAllCategorieList();
-            }
-            catch (Exception ex)
-            {
-                view.IsSuccesful = false;
-                view.Message = "An error ocurred, could ot delete categorie";
-            }
-        }
-
-        private void LoadSelectCategorieToEdit(object? sender, EventArgs e)
-        {
-            var categorie = (CategorieModel)categorieBindingSource.Current;
-
-            view.CategorieId = categorie.Id.ToString();
-            view.CategorieName = categorie.Name;
-            view.CategorieObservation = categorie.Observation;
-
-            view.IsEdit = true;
-        }
-
-        private void AddNewCategorie(object? sender, EventArgs e)
-        {
-            view.IsEdit = false;
-        }
-
-        private void SearchCategorie(object? sender, EventArgs e)
-        {
-            bool emptyValue = string.IsNullOrWhiteSpace(this.view.SearchValue);
-            if (emptyValue == false)
-            {
-                categorieList = repository.GetByValue(this.view.SearchValue);
-            }
-            else
-            {
-                categorieList = repository.GetAll();
-            }
-            categorieBindingSource.DataSource = categorieList;
-        }
     }
 }
