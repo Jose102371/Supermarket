@@ -117,6 +117,7 @@
             tabPageProductList.TabIndex = 0;
             tabPageProductList.Text = "Product List";
             tabPageProductList.UseVisualStyleBackColor = true;
+            tabPageProductList.Click += tabPageProductList_Click;
             // 
             // BtnEdit
             // 
@@ -126,6 +127,7 @@
             BtnEdit.Size = new Size(52, 39);
             BtnEdit.TabIndex = 9;
             BtnEdit.UseVisualStyleBackColor = true;
+            BtnEdit.Click += BtnEdit_Click;
             // 
             // BtnDelete
             // 
@@ -135,6 +137,7 @@
             BtnDelete.Size = new Size(52, 36);
             BtnDelete.TabIndex = 8;
             BtnDelete.UseVisualStyleBackColor = true;
+            BtnDelete.Click += BtnDelete_Click;
             // 
             // BtnClose
             // 
@@ -144,6 +147,7 @@
             BtnClose.Size = new Size(52, 41);
             BtnClose.TabIndex = 7;
             BtnClose.UseVisualStyleBackColor = true;
+            BtnClose.Click += BtnClose_Click;
             // 
             // BtnNew
             // 
@@ -153,6 +157,7 @@
             BtnNew.Size = new Size(52, 41);
             BtnNew.TabIndex = 6;
             BtnNew.UseVisualStyleBackColor = true;
+            BtnNew.Click += BtnNew_Click_1;
             // 
             // BtnSearch
             // 
@@ -163,6 +168,7 @@
             BtnSearch.Size = new Size(52, 41);
             BtnSearch.TabIndex = 5;
             BtnSearch.UseVisualStyleBackColor = true;
+            BtnSearch.Click += BtnSearch_Click;
             // 
             // TxtSearch
             // 

@@ -10,19 +10,17 @@ using System.Windows.Forms;
 
 namespace Supermarket.Views
 {
-    public partial class ProductView : Form, IProductView
+    public partial class CategorieView : Form, ICategorieView
     {
-
-
         private bool isEdit;
         private bool isSuccesful;
         private string message;
 
-        public ProductView()
+        public CategorieView()
         {
             InitializeComponent();
 
-            tabControl1.TabPages.Remove(tabPageProdutDetail);
+            tabControl1.TabPages.Remove(tabPageCategorieDetail);
 
             BtnClose.Click += delegate { this.Close(); };
         }
@@ -43,9 +41,9 @@ namespace Supermarket.Views
             {
                 AddNewEvent?.Invoke(this, EventArgs.Empty);
 
-                tabControl1.TabPages.Remove(tabPageProductList);
-                tabControl1.TabPages.Add(tabPageProdutDetail);
-                tabPageProdutDetail.Text = "Add New Product";
+                tabControl1.TabPages.Remove(tabPageCategorieList);
+                tabControl1.TabPages.Add(tabPageCategorieDetail);
+                tabPageCategorieDetail.Text = "Add New Product";
 
             };
 
@@ -53,9 +51,9 @@ namespace Supermarket.Views
             {
                 EditEvent?.Invoke(this, EventArgs.Empty);
 
-                tabControl1.TabPages.Remove(tabPageProductList);
-                tabControl1.TabPages.Add(tabPageProdutDetail);
-                tabPageProdutDetail.Text = "Edit Product";
+                tabControl1.TabPages.Remove(tabPageCategorieList);
+                tabControl1.TabPages.Add(tabPageCategorieDetail);
+                tabPageCategorieDetail.Text = "Edit Product";
             };
 
             BtnSave.Click += delegate
@@ -64,8 +62,8 @@ namespace Supermarket.Views
 
                 if (isSuccesful)
                 {
-                    tabControl1.TabPages.Remove(tabPageProdutDetail);
-                    tabControl1.TabPages.Add(tabPageProductList);
+                    tabControl1.TabPages.Remove(tabPageCategorieDetail);
+                    tabControl1.TabPages.Add(tabPageCategorieList);
                 }
                 MessageBox.Show(Message);
             };
@@ -74,8 +72,8 @@ namespace Supermarket.Views
             {
                 CancelEvent?.Invoke(this, EventArgs.Empty);
 
-                tabControl1.TabPages.Remove(tabPageProdutDetail);
-                tabControl1.TabPages.Add(tabPageProductList);
+                tabControl1.TabPages.Remove(tabPageCategorieDetail);
+                tabControl1.TabPages.Add(tabPageCategorieList);
             };
 
             BtnDelete.Click += delegate
@@ -93,20 +91,20 @@ namespace Supermarket.Views
             };
         }
 
-        public string ProductId
+        public string CategorieId
         {
-            get { return TxtProductId.Text; }
-            set { TxtProductId.Text = value; }
+            get { return TxtCategorieId.Text; }
+            set { TxtCategorieId.Text = value; }
         }
-        public string ProductName
+        public string CategorieName
         {
-            get { return TxtProductName.Text; }
-            set { TxtProductName.Text = value; }
+            get { return TxtCategorieName.Text; }
+            set { TxtCategorieName.Text = value; }
         }
-        public string ProductObservation
+        public string CategorieObservation
         {
-            get { return TxtProductObservation.Text; }
-            set { TxtProductObservation.Text = value; }
+            get { return TxtCategorieObservation.Text; }
+            set { TxtCategorieObservation.Text = value; }
         }
 
 
@@ -139,18 +137,19 @@ namespace Supermarket.Views
         public event EventHandler CancelEvent;
         public event EventHandler SaveEvent;
 
-        public void SetProductListBildingSource(BindingSource productList)
+
+        public void SetCategorieListBildingSource(BindingSource categorieList)
         {
-            DgProduct.DataSource = productList;
+            DgCategorie.DataSource = categorieList;
         }
 
-        private static ProductView instance;
+        private static CategorieView instance;
 
-        public static ProductView GetInstance(Form parentContainer)
+        public static CategorieView GetInstance(Form parentContainer)
         {
             if (instance == null || instance.IsDisposed)
             {
-                instance = new ProductView();
+                instance = new CategorieView();
                 instance.MdiParent = parentContainer;
 
                 instance.FormBorderStyle = FormBorderStyle.None;
@@ -166,6 +165,8 @@ namespace Supermarket.Views
             }
             return instance;
         }
+
+        
 
 
 
@@ -231,5 +232,7 @@ namespace Supermarket.Views
         private void BtnClose_Click(object sender, EventArgs e)
         {
         }
+
+        
     }
 }
