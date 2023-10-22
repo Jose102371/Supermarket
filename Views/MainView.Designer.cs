@@ -30,16 +30,18 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
             panel1 = new Panel();
+            BtnProduct = new Button();
             BtnExit = new Button();
             BtnPayMode = new Button();
             pictureBox1 = new PictureBox();
-            BtnProduct = new Button();
+            BtnProvider = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(BtnProvider);
             panel1.Controls.Add(BtnProduct);
             panel1.Controls.Add(BtnExit);
             panel1.Controls.Add(BtnPayMode);
@@ -49,6 +51,16 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(200, 450);
             panel1.TabIndex = 0;
+            // 
+            // BtnProduct
+            // 
+            BtnProduct.BackgroundImage = Properties.Resources.products;
+            BtnProduct.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnProduct.Location = new Point(0, 133);
+            BtnProduct.Name = "BtnProduct";
+            BtnProduct.Size = new Size(187, 80);
+            BtnProduct.TabIndex = 3;
+            BtnProduct.UseVisualStyleBackColor = true;
             // 
             // BtnExit
             // 
@@ -65,9 +77,9 @@
             // 
             BtnPayMode.BackgroundImage = Properties.Resources.buy;
             BtnPayMode.BackgroundImageLayout = ImageLayout.Zoom;
-            BtnPayMode.Location = new Point(0, 59);
+            BtnPayMode.Location = new Point(3, 59);
             BtnPayMode.Name = "BtnPayMode";
-            BtnPayMode.Size = new Size(200, 98);
+            BtnPayMode.Size = new Size(184, 68);
             BtnPayMode.TabIndex = 1;
             BtnPayMode.UseVisualStyleBackColor = true;
             // 
@@ -81,15 +93,15 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // BtnProduct
+            // BtnProvider
             // 
-            BtnProduct.BackgroundImage = Properties.Resources.products;
-            BtnProduct.BackgroundImageLayout = ImageLayout.Zoom;
-            BtnProduct.Location = new Point(0, 176);
-            BtnProduct.Name = "BtnProduct";
-            BtnProduct.Size = new Size(200, 98);
-            BtnProduct.TabIndex = 3;
-            BtnProduct.UseVisualStyleBackColor = true;
+            BtnProvider.BackgroundImage = Properties.Resources.providers;
+            BtnProvider.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnProvider.Location = new Point(0, 219);
+            BtnProvider.Name = "BtnProvider";
+            BtnProvider.Size = new Size(187, 80);
+            BtnProvider.TabIndex = 4;
+            BtnProvider.UseVisualStyleBackColor = true;
             // 
             // MainView
             // 
@@ -113,5 +125,6 @@
         private PictureBox pictureBox1;
         private Button BtnExit;
         private Button BtnProduct;
+        private Button BtnProvider;
     }
 }

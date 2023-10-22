@@ -10,6 +10,7 @@ namespace Supermarket.Views
     {
         event EventHandler ShowPayModeView;
         event EventHandler ShowProductView;
+        event EventHandler ShowProviderView;
         event EventHandler ShowCustomerView;
 
         // Los demas
