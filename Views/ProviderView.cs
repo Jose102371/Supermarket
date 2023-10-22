@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Supermarket.Views
 {
-    public partial class ProviderView : Form,IProviderWiew
+    public partial class ProviderView : Form,IProviderView
     {
         private bool isEdit;
         private bool isSuccesful;
