@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver.Core.Configuration;
-using Supermarket.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data;
 using Supermarket.Models;
-
 namespace Supermarket._Repositories
 {
     internal class PayModeRepository:BaseRepository,IPayModeRepository
@@ -20,20 +18,59 @@ namespace Supermarket._Repositories
         }
 
 
-
+           
         public void Add(PayModeModel payModeModel)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "INSERT INTO PayMode VALUES(@name ,@observation";
+                command.Parameters.Add("@name", System.Data.SqlDbType.NVarChar).Value = payModeModel.Name;
+                command.Parameters.Add("@observation", System.Data.SqlDbType.NVarChar).Value = payModeModel.Observation;
+                command.ExecuteNonQuery();
+
+
+            }
+        }
+
+       
+
+        public void Delete(int id)
+        {
+            
+
         }
 
         public void Delete(PayModeModel payModeModel)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "DELETE FROM PayMode WHERE Pay_Mode_Id =@id";
+                command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                command.ExecuteNonQuery();
+            }
         }
 
         public void Edit(PayModeModel payModeModel)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = @"INSERT INTO PayMode 
+                                        SET Pay_Mode_Name=nameo
+                                        Pay_Mode_Observation=@observation
+                                        WHERE Pay_Mode_Id=@id";
+                command.Parameters.Add("@name", System.Data.SqlDbType.NVarChar).Value = payModeModel.Name;
+                command.Parameters.Add("@observation", System.Data.SqlDbType.NVarChar).Value = payModeModel.Observation;
+                command.ExecuteNonQuery();
+            }
         }
 
         public IEnumerable<PayModeModel> GetAll()

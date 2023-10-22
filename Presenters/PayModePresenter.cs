@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,27 +49,103 @@ namespace Supermarket.Presenters
 
         private void CancelAction(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            CleanViewFields();
         }
 
         private void SavePayMode(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var payMode = new PayModeModel();
+            payMode.Id = Convert.ToInt32(view.PayModeId);
+            payMode.Name = view.PayModeName;
+            payMode.Observation = view.PayModeObservation;
+
+            try
+            {
+                new Common.ModelDataValidation().Validate(payMode);
+                if(view.IsEdit)
+                {
+                    repository.Edit(payMode);
+                    view.Message = "PayMode edited successfuly";
+                }
+                else
+                {
+                    repository.Add(payMode);
+                    view.Message = "PayMode added successfuly";
+                }
+
+
+                view.IsSuccessfull = true;
+                loadAllPayModeList();
+                CleanViewFields();
+            }
+
+            catch(Exception ex)
+            {
+
+                view.IsSuccessfull = false;
+                view.Message = ex.Message;
+            }
+
+
         }
+
+        private void CleanViewFields()
+        {
+
+            view.PayModeId = "0";
+            view.PayModeName = "";
+            view.PayModeObservation = "";
+
+
+        }
+
+        
+
+        
 
         private void LoadSelectPayModeToEdit(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
+            var PayMode = (PayModeModel)payModeBindingSource.Current;
+
+
+            view.PayModeId = PayMode.Id.ToString();
+            view.PayModeName = PayMode.Name;
+            view.PayModeObservation = PayMode.Observation;
+
+            view.IsEdit = true;
+
+
         }
 
         private void DeleteSelectedPayMode(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+
+                var payMode = (PayModeModel)payModeBindingSource.Current;
+
+                repository.Delete(payMode.Id);
+                view.IsSuccessfull = true;
+                view.Message = "Pay Mode deleted successfully";
+                loadAllPayModeList();
+                    
+            }
+
+            catch (Exception ex) 
+            {
+                view.IsSuccessfull = false;
+                view.Message = "An error ocurred, could not delete pay mode";
+            
+            }
         }
 
         private void AddNewPayMode(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
+            view.IsEdit = false;
+
         }
 
         private void SearchPayMode(object? sender, EventArgs e)

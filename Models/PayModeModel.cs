@@ -16,7 +16,8 @@ namespace Supermarket.Models
 
         [DisplayName ("Pay Mode Name")]
         [Required(ErrorMessage= "Pay mode name is required")]
-        [StringLength(200, MinimumLength =3,ErrorMessage="´Pay Mode observation is required")]
+        [StringLength(50, MinimumLength =3,
+            ErrorMessage="´Pay Mode observation is required")]
         public string Name { get; set; }
 
         [DisplayName(" Observation")]

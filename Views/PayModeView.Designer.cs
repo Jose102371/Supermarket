@@ -32,7 +32,7 @@
             pictureBox1 = new PictureBox();
             label1 = new Label();
             tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
+            tabPagePayModeList = new TabPage();
             BtnNew = new Button();
             BtnClose = new Button();
             BtnDelete = new Button();
@@ -53,7 +53,7 @@
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
+            tabPagePayModeList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DgPayMode).BeginInit();
             tabPagePayModeDetail.SuspendLayout();
             SuspendLayout();
@@ -90,7 +90,7 @@
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPagePayModeList);
             tabControl1.Controls.Add(tabPagePayModeDetail);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 117);
@@ -99,23 +99,23 @@
             tabControl1.Size = new Size(800, 333);
             tabControl1.TabIndex = 1;
             // 
-            // tabPage1
+            // tabPagePayModeList
             // 
-            tabPage1.Controls.Add(BtnNew);
-            tabPage1.Controls.Add(BtnClose);
-            tabPage1.Controls.Add(BtnDelete);
-            tabPage1.Controls.Add(BtnEdit);
-            tabPage1.Controls.Add(DgPayMode);
-            tabPage1.Controls.Add(BtnSearch);
-            tabPage1.Controls.Add(TxtSearch);
-            tabPage1.Controls.Add(label2);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(792, 305);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Pay Mode List";
-            tabPage1.UseVisualStyleBackColor = true;
+            tabPagePayModeList.Controls.Add(BtnNew);
+            tabPagePayModeList.Controls.Add(BtnClose);
+            tabPagePayModeList.Controls.Add(BtnDelete);
+            tabPagePayModeList.Controls.Add(BtnEdit);
+            tabPagePayModeList.Controls.Add(DgPayMode);
+            tabPagePayModeList.Controls.Add(BtnSearch);
+            tabPagePayModeList.Controls.Add(TxtSearch);
+            tabPagePayModeList.Controls.Add(label2);
+            tabPagePayModeList.Location = new Point(4, 24);
+            tabPagePayModeList.Name = "tabPagePayModeList";
+            tabPagePayModeList.Padding = new Padding(3);
+            tabPagePayModeList.Size = new Size(792, 305);
+            tabPagePayModeList.TabIndex = 0;
+            tabPagePayModeList.Text = "Pay Mode List";
+            tabPagePayModeList.UseVisualStyleBackColor = true;
             // 
             // BtnNew
             // 
@@ -283,8 +283,11 @@
             // 
             TxtPayModeId.Location = new Point(8, 38);
             TxtPayModeId.Name = "TxtPayModeId";
+            TxtPayModeId.ReadOnly = true;
             TxtPayModeId.Size = new Size(490, 23);
             TxtPayModeId.TabIndex = 2;
+            TxtPayModeId.Text = "0";
+            TxtPayModeId.TextAlign = HorizontalAlignment.Right;
             // 
             // PayModeView
             // 
@@ -298,8 +301,8 @@
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            tabPagePayModeList.ResumeLayout(false);
+            tabPagePayModeList.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DgPayMode).EndInit();
             tabPagePayModeDetail.ResumeLayout(false);
             tabPagePayModeDetail.PerformLayout();
@@ -312,7 +315,7 @@
         private Label label1;
         private PictureBox pictureBox1;
         private TabControl tabControl1;
-        private TabPage tabPage1;
+        private TabPage tabPagePayModeList;
         private TabPage tabPagePayModeDetail;
         private Button BtnSearch;
         private TextBox TxtSearch;

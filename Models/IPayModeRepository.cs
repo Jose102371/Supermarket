@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Supermarket.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.Data;
+using MongoDB.Driver.Core.Configuration;
 
-namespace Supermarket._Repositories
+namespace Supermarket.Models
 {
     internal interface IPayModeRepository
     {
+
         void Add(PayModeModel payModeModel);
 
         void Edit(PayModeModel payModeModel);
