@@ -25,7 +25,7 @@ namespace Supermarket.Views
             tabControl1.TabPages.Remove(tabPageProdutDetail);
 
             BtnClose.Click += delegate { this.Close(); };
-         }
+        }
 
         private void AssociateAndRaiseViewEvents()
         {

@@ -66,3 +66,4 @@ C:\Users\admin\Documents\Supermarket\obj\Debug\net7.0-windows\refint\Supermarket
 C:\Users\admin\Documents\Supermarket\obj\Debug\net7.0-windows\Supermarket.pdb
 C:\Users\admin\Documents\Supermarket\obj\Debug\net7.0-windows\Supermarket.genruntimeconfig.cache
 C:\Users\admin\Documents\Supermarket\obj\Debug\net7.0-windows\ref\Supermarket.dll
+C:\Users\admin\Documents\Supermarket\obj\Debug\net7.0-windows\Supermarket.Views.ProductView.resources
