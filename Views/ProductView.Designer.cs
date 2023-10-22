@@ -33,6 +33,10 @@
             label1 = new Label();
             tabControl1 = new TabControl();
             tabPageProductList = new TabPage();
+            BtnEdit = new Button();
+            BtnDelete = new Button();
+            BtnClose = new Button();
+            BtnNew = new Button();
             BtnSearch = new Button();
             TxtSearch = new TextBox();
             label2 = new Label();
@@ -46,10 +50,6 @@
             label4 = new Label();
             TxtProductId = new TextBox();
             label3 = new Label();
-            BtnNew = new Button();
-            BtnClose = new Button();
-            BtnDelete = new Button();
-            BtnEdit = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tabControl1.SuspendLayout();
@@ -101,6 +101,7 @@
             // 
             // tabPageProductList
             // 
+            tabPageProductList.BackgroundImageLayout = ImageLayout.Center;
             tabPageProductList.Controls.Add(BtnEdit);
             tabPageProductList.Controls.Add(BtnDelete);
             tabPageProductList.Controls.Add(BtnClose);
@@ -116,6 +117,42 @@
             tabPageProductList.TabIndex = 0;
             tabPageProductList.Text = "Product List";
             tabPageProductList.UseVisualStyleBackColor = true;
+            // 
+            // BtnEdit
+            // 
+            BtnEdit.Image = Properties.Resources.edit;
+            BtnEdit.Location = new Point(528, 117);
+            BtnEdit.Name = "BtnEdit";
+            BtnEdit.Size = new Size(52, 39);
+            BtnEdit.TabIndex = 9;
+            BtnEdit.UseVisualStyleBackColor = true;
+            // 
+            // BtnDelete
+            // 
+            BtnDelete.Image = Properties.Resources.delete;
+            BtnDelete.Location = new Point(528, 162);
+            BtnDelete.Name = "BtnDelete";
+            BtnDelete.Size = new Size(52, 36);
+            BtnDelete.TabIndex = 8;
+            BtnDelete.UseVisualStyleBackColor = true;
+            // 
+            // BtnClose
+            // 
+            BtnClose.Image = Properties.Resources.cerrar;
+            BtnClose.Location = new Point(528, 204);
+            BtnClose.Name = "BtnClose";
+            BtnClose.Size = new Size(52, 41);
+            BtnClose.TabIndex = 7;
+            BtnClose.UseVisualStyleBackColor = true;
+            // 
+            // BtnNew
+            // 
+            BtnNew.Image = Properties.Resources._new;
+            BtnNew.Location = new Point(528, 70);
+            BtnNew.Name = "BtnNew";
+            BtnNew.Size = new Size(52, 41);
+            BtnNew.TabIndex = 6;
+            BtnNew.UseVisualStyleBackColor = true;
             // 
             // BtnSearch
             // 
@@ -222,6 +259,7 @@
             TxtProductName.Size = new Size(334, 23);
             TxtProductName.TabIndex = 7;
             TxtProductName.TextAlign = HorizontalAlignment.Center;
+            TxtProductName.TextChanged += TxtProductName_TextChanged;
             // 
             // label4
             // 
@@ -231,6 +269,7 @@
             label4.Size = new Size(87, 15);
             label4.TabIndex = 6;
             label4.Text = " Product Name";
+            label4.Click += label4_Click;
             // 
             // TxtProductId
             // 
@@ -251,42 +290,7 @@
             label3.Size = new Size(65, 15);
             label3.TabIndex = 4;
             label3.Text = " Product Id";
-            // 
-            // BtnNew
-            // 
-            BtnNew.Image = Properties.Resources._new;
-            BtnNew.Location = new Point(528, 70);
-            BtnNew.Name = "BtnNew";
-            BtnNew.Size = new Size(52, 41);
-            BtnNew.TabIndex = 6;
-            BtnNew.UseVisualStyleBackColor = true;
-            // 
-            // BtnClose
-            // 
-            BtnClose.Image = Properties.Resources.cerrar;
-            BtnClose.Location = new Point(528, 204);
-            BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(52, 41);
-            BtnClose.TabIndex = 7;
-            BtnClose.UseVisualStyleBackColor = true;
-            // 
-            // BtnDelete
-            // 
-            BtnDelete.Image = Properties.Resources.delete;
-            BtnDelete.Location = new Point(528, 162);
-            BtnDelete.Name = "BtnDelete";
-            BtnDelete.Size = new Size(52, 36);
-            BtnDelete.TabIndex = 8;
-            BtnDelete.UseVisualStyleBackColor = true;
-            // 
-            // BtnEdit
-            // 
-            BtnEdit.Image = Properties.Resources.edit;
-            BtnEdit.Location = new Point(528, 117);
-            BtnEdit.Name = "BtnEdit";
-            BtnEdit.Size = new Size(52, 39);
-            BtnEdit.TabIndex = 9;
-            BtnEdit.UseVisualStyleBackColor = true;
+            label3.Click += label3_Click;
             // 
             // ProductView
             // 
