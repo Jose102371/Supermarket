@@ -12,39 +12,36 @@ namespace Supermarket.Presenters
     internal class PayModePresenter
     {
         private IPayModeView view;
-
         private IPayModeRepository repository;
-
         private BindingSource payModeBindingSource;
-
-        private IEnumerable<PayModeModel> payModelist;
+        private IEnumerable<PayModeModel> payModeList;
 
         public PayModePresenter(IPayModeView view, IPayModeRepository repository)
         {
-
             this.payModeBindingSource = new BindingSource();
 
             this.view = view;
             this.repository = repository;
 
             this.view.SearchEvent += SearchPayMode;
-            this.view.SearchEvent += AddNewPayMode;
-            this.view.SearchEvent += LoadSelectPayModeToEdit;
-            this.view.SearchEvent += DeleteSelectedPayMode;
-            this.view.SearchEvent += SavePayMode;
-            this.view.SearchEvent += CancelAction;
+            this.view.AddNewEvent += AddNewPayMode;
+            this.view.EditEvent += LoadSelectPayModeToEdit;
+            this.view.DeleteEvent += DeleteSelectedPayMode;
+            this.view.SaveEvent += SavePayMode;
+            this.view.CancelEvent += CancelAction;
 
             this.view.SetPayModeListBildingSource(payModeBindingSource);
 
-            loadAllPayModeList();
+            LoadAllPayModeList();
 
             this.view.Show();
+
         }
 
-        private void loadAllPayModeList()
+        private void LoadAllPayModeList()
         {
-            payModelist = repository.GetAll();
-            payModeBindingSource.DataSource = payModelist;
+            payModeList = repository.GetAll();
+            payModeBindingSource.DataSource = payModeList;
         }
 
         private void CancelAction(object? sender, EventArgs e)
@@ -62,7 +59,7 @@ namespace Supermarket.Presenters
             try
             {
                 new Common.ModelDataValidation().Validate(payMode);
-                if(view.IsEdit)
+                if (view.IsEdit)
                 {
                     repository.Edit(payMode);
                     view.Message = "PayMode edited successfuly";
@@ -72,94 +69,70 @@ namespace Supermarket.Presenters
                     repository.Add(payMode);
                     view.Message = "PayMode added successfuly";
                 }
-
-
                 view.IsSuccessfull = true;
-                loadAllPayModeList();
+                LoadAllPayModeList();
                 CleanViewFields();
             }
-
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
                 view.IsSuccessfull = false;
                 view.Message = ex.Message;
             }
-
-
         }
 
         private void CleanViewFields()
         {
-
             view.PayModeId = "0";
             view.PayModeName = "";
             view.PayModeObservation = "";
-
-
-        }
-
-        
-
-        
-
-        private void LoadSelectPayModeToEdit(object? sender, EventArgs e)
-        {
-
-            var PayMode = (PayModeModel)payModeBindingSource.Current;
-
-
-            view.PayModeId = PayMode.Id.ToString();
-            view.PayModeName = PayMode.Name;
-            view.PayModeObservation = PayMode.Observation;
-
-            view.IsEdit = true;
-
-
         }
 
         private void DeleteSelectedPayMode(object? sender, EventArgs e)
         {
             try
             {
-
-
                 var payMode = (PayModeModel)payModeBindingSource.Current;
 
                 repository.Delete(payMode.Id);
                 view.IsSuccessfull = true;
                 view.Message = "Pay Mode deleted successfully";
-                loadAllPayModeList();
-                    
+                LoadAllPayModeList();
             }
-
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 view.IsSuccessfull = false;
-                view.Message = "An error ocurred, could not delete pay mode";
-            
+                view.Message = "An error ocurred, could ot delete pay mode";
             }
+        }
+
+        private void LoadSelectPayModeToEdit(object? sender, EventArgs e)
+        {
+            var payMode = (PayModeModel)payModeBindingSource.Current;
+
+            view.PayModeId = payMode.Id.ToString();
+            view.PayModeName = payMode.Name;
+            view.PayModeObservation = payMode.Observation;
+
+            view.IsEdit = true;
         }
 
         private void AddNewPayMode(object? sender, EventArgs e)
         {
-
             view.IsEdit = false;
-
         }
 
         private void SearchPayMode(object? sender, EventArgs e)
         {
             bool emptyValue = string.IsNullOrWhiteSpace(this.view.SearchValue);
-            if (emptyValue==false)
+            if (emptyValue == false)
             {
-                payModelist = repository.GetByValue(this.view.SearchValue);
+                payModeList = repository.GetByValue(this.view.SearchValue);
             }
             else
             {
-                payModelist = repository.GetAll();
+                payModeList = repository.GetAll();
             }
-            payModeBindingSource.DataSource = payModelist;
+            payModeBindingSource.DataSource = payModeList;
         }
     }
 }

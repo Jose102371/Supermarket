@@ -17,7 +17,7 @@ namespace Supermarket.Models
 
         void Edit(PayModeModel payModeModel);
 
-        void Delete(PayModeModel payModeModel);
+        void Delete(int id);
 
         IEnumerable<PayModeModel> GetAll();
 
