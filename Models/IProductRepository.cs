@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Supermarket.Models
 {
-    internal interface IProductModel
+    internal interface IProductRepository
     {
+        void Add(ProductModel productModel);
+        void Edit(ProductModel productModel);
+        void Delete(int id);
+        IEnumerable<ProductModel> GetAll();
+        IEnumerable<ProductModel> GetByValue(string value);
     }
+
+
 }
