@@ -8,5 +8,10 @@ namespace Supermarket.Models
 {
     internal interface ICategorieRepository
     {
+        void Add(CategorieModel categorieModel);
+        void Edit(CategorieModel categorieModel);
+        void Delete(int id);
+        IEnumerable<CategorieModel> GetAll();
+        IEnumerable<CategorieModel> GetByValue(string value);
     }
 }
