@@ -21,6 +21,7 @@ namespace Supermarket.Presenters
             this.mainView.ShowPayModeView += ShowPayModeView;
             this.mainView.ShowProductView += ShowProductView;
             this.mainView.ShowProviderView += ShowProductView;
+            this.mainView.ShowCategorieView += ShowCategorieView;
 
 
         }
@@ -44,7 +45,12 @@ namespace Supermarket.Presenters
             new ProviderPresenter(view, repository);
         }
 
-
+        private void ShowCategorieView(object? sender, EventArgs e)
+        {
+            ICategorieView view = CategorieView.GetInstance((MainView)mainView);
+            ICategorieRepository repository = new CategorieRepository(sqlConnectionString);
+            new CategoriePresenter(view, repository);
+        }
 
 
 

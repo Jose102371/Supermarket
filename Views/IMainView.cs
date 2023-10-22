@@ -12,6 +12,7 @@ namespace Supermarket.Views
         event EventHandler ShowProductView;
         event EventHandler ShowProviderView;
         event EventHandler ShowCustomerView;
+        event EventHandler ShowCategorieView;
 
         // Los demas
     }
